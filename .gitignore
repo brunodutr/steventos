@@ -1,0 +1,7 @@
+/target/
+
+/node_installation/
+.classpath
+.project
+.settings/
+/angular/

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.steventos</groupId>
+	<artifactId>sis-tudo-eventos</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<build>
+		<finalName>JPA_TEST</finalName>
+		<plugins>
+
+			<!-- <plugin> -->
+			<!-- <groupId>com.github.eirslett</groupId> -->
+			<!-- <artifactId>frontend-maven-plugin</artifactId> -->
+			<!-- <version>1.6</version> -->
+			<!-- <configuration> -->
+			<!-- <workingDirectory>${angular.project.location}</workingDirectory> -->
+			<!-- <installDirectory>${angular.project.nodeinstallation}</installDirectory> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- It will install nodejs and npm -->
+			<!-- <execution> -->
+			<!-- <id>install node and npm</id> -->
+			<!-- <goals> -->
+			<!-- <goal>install-node-and-npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <nodeVersion>v8.11.1</nodeVersion> -->
+			<!-- <npmVersion>6.4.1</npmVersion> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+
+			<!-- It will execute command "npm install" inside "/e2e-angular2" directory -->
+			<!-- <execution> -->
+			<!-- <id>npm install</id> -->
+			<!-- <goals> -->
+			<!-- <goal>npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <arguments>install</arguments> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>npm build</id> -->
+			<!-- <goals> -->
+			<!-- <goal>npm</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <arguments>run build</arguments> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-resources-plugin</artifactId> -->
+			<!-- <version>3.1.0</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>default-copy-resources</id> -->
+			<!-- <phase>process-resources</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>copy-resources</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <overwrite>true</overwrite> -->
+			<!-- <outputDirectory>${project.build.directory}/${project.artifactId}/</outputDirectory> -->
+			<!-- <resources> -->
+			<!-- <resource> -->
+			<!-- <directory>${project.basedir}/${angular.project.location}/www</directory> -->
+			<!-- </resource> -->
+			<!-- </resources> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.6.Final</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>8.0</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<properties>
+		<angular.project.location>angular</angular.project.location>
+		<angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+</project>
