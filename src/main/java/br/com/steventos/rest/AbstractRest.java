@@ -14,7 +14,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 
 import br.com.steventos.dao.AbstractDAO;
 
@@ -22,12 +21,6 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	@Inject
 	protected K dao;
-
-	private Class<T> clazz;
-
-	public AbstractRest(Class<T> clazz) {
-		this.clazz = clazz;
-	}
 
 	@GET
 	public List<T> listAll(@QueryParam("start") final Integer startPosition,
@@ -37,10 +30,9 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 	}
 
 	@POST
-	public Response create(@Valid final T entity) {
-
+	public T create(@Valid final T entity) {
 		T object = dao.create(entity);
-		return Response.created(UriBuilder.fromResource(clazz).path(String.valueOf(object)).build()).build();
+		return object;
 	}
 
 	@GET

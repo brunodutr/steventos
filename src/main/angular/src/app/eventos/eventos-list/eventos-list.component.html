@@ -1,0 +1,35 @@
+<form>
+
+  <div class="row d-flex justify-content-center">
+
+    <mat-form-field class="col-5">
+      <input type="text" matInput placeholder="Evento">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+
+    <mat-form-field class="col-5">
+      <input type="text" matInput placeholder="Cidade">
+      <mat-icon matSuffix>near_me</mat-icon>
+    </mat-form-field>
+
+    <div class="col-1">
+      <button mat-flat-button color="primary">Procurar</button>
+    </div>
+
+  </div>
+
+</form>
+
+<div class="row">
+
+  <mat-card *ngFor="let evento of eventos" class="col-md-4 col-sm-12 mb-2">
+    <img mat-card-image src="assets/background.jpg" class="p-2">
+    <mat-card-content>
+      <p>
+        {{ evento.descricao }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

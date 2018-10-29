@@ -2,24 +2,40 @@ package br.com.steventos.model;
 
 import static javax.persistence.GenerationType.AUTO;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Evento {
+@Table(name = "EVENTO")
+public class Evento implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=AUTO)
+	@GeneratedValue(strategy = AUTO)
 	private Long id;
-	
+
+	private String nome;
+
+	private String descricao;
+
 	private Date dataIni;
-	
+
 	private Date dataFim;
-	
-	private String local;
+
+	private String cidade;
+
+//	@JsonbTransient
+//	@ManyToMany(mappedBy = "eventos", cascade = ALL)
+//	private Set<Pessoa> pessoas;
 
 	public Long getId() {
 		return id;
@@ -28,7 +44,7 @@ public class Evento {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public Date getDataIni() {
 		return dataIni;
 	}
@@ -45,12 +61,35 @@ public class Evento {
 		this.dataFim = dataFim;
 	}
 
-	public String getLocal() {
-		return local;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setLocal(String local) {
-		this.local = local;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
-	
+
+//	public Set<Pessoa> getPessoas() {
+//		return pessoas;
+//	}
+//
+//	public void setPessoas(Set<Pessoa> pessoas) {
+//		this.pessoas = pessoas;
+//	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }

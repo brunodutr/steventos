@@ -15,8 +15,4 @@ import br.com.steventos.rest.AbstractRest;
 @Consumes("application/json")
 public class EventoRest extends AbstractRest<Evento, EventoDAO> {
 
-	public EventoRest() {
-		super(Evento.class);
-	}
-
 }

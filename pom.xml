@@ -8,74 +8,74 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<build>
-		<finalName>JPA_TEST</finalName>
+		<finalName>steventos</finalName>
 		<plugins>
 
-			<!-- <plugin> -->
-			<!-- <groupId>com.github.eirslett</groupId> -->
-			<!-- <artifactId>frontend-maven-plugin</artifactId> -->
-			<!-- <version>1.6</version> -->
-			<!-- <configuration> -->
-			<!-- <workingDirectory>${angular.project.location}</workingDirectory> -->
-			<!-- <installDirectory>${angular.project.nodeinstallation}</installDirectory> -->
-			<!-- </configuration> -->
-			<!-- <executions> -->
-			<!-- It will install nodejs and npm -->
-			<!-- <execution> -->
-			<!-- <id>install node and npm</id> -->
-			<!-- <goals> -->
-			<!-- <goal>install-node-and-npm</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <nodeVersion>v8.11.1</nodeVersion> -->
-			<!-- <npmVersion>6.4.1</npmVersion> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<workingDirectory>${angular.project.location}</workingDirectory>
+					<installDirectory>${angular.project.nodeinstallation}</installDirectory>
+				</configuration>
+				<executions>
+					<!-- It will install nodejs and npm -->
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v8.11.1</nodeVersion>
+							<npmVersion>6.4.1</npmVersion>
+						</configuration>
+					</execution>
 
-			<!-- It will execute command "npm install" inside "/e2e-angular2" directory -->
-			<!-- <execution> -->
-			<!-- <id>npm install</id> -->
-			<!-- <goals> -->
-			<!-- <goal>npm</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <arguments>install</arguments> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- <execution> -->
-			<!-- <id>npm build</id> -->
-			<!-- <goals> -->
-			<!-- <goal>npm</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <arguments>run build</arguments> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-resources-plugin</artifactId> -->
-			<!-- <version>3.1.0</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>default-copy-resources</id> -->
-			<!-- <phase>process-resources</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>copy-resources</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <overwrite>true</overwrite> -->
-			<!-- <outputDirectory>${project.build.directory}/${project.artifactId}/</outputDirectory> -->
-			<!-- <resources> -->
-			<!-- <resource> -->
-			<!-- <directory>${project.basedir}/${angular.project.location}/www</directory> -->
-			<!-- </resource> -->
-			<!-- </resources> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
+					<!-- It will execute command "npm install" inside "/e2e-angular2" directory -->
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>default-copy-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<overwrite>true</overwrite>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/${angular.project.location}/dist/</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -90,6 +90,24 @@
 			<version>5.3.6.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.6.1.Final</version>
+		</dependency>
+		<!-- testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.192</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -102,7 +120,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<properties>
-		<angular.project.location>angular</angular.project.location>
+		<angular.project.location>src/main/angular</angular.project.location>
 		<angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<maven.compiler.source>1.8</maven.compiler.source>
