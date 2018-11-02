@@ -1,14 +1,19 @@
 package br.com.steventos.model;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "EVENTO")
@@ -33,9 +38,9 @@ public class Evento implements Serializable {
 
 	private String cidade;
 
-//	@JsonbTransient
-//	@ManyToMany(mappedBy = "eventos", cascade = ALL)
-//	private Set<Pessoa> pessoas;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "eventos", cascade = ALL, targetEntity = Pessoa.class)
+	private Set<Pessoa> pessoas;
 
 	public Long getId() {
 		return id;
@@ -69,13 +74,13 @@ public class Evento implements Serializable {
 		this.cidade = cidade;
 	}
 
-//	public Set<Pessoa> getPessoas() {
-//		return pessoas;
-//	}
-//
-//	public void setPessoas(Set<Pessoa> pessoas) {
-//		this.pessoas = pessoas;
-//	}
+	public Set<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+	public void setPessoas(Set<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
 
 	public String getNome() {
 		return nome;

@@ -3,6 +3,7 @@ package br.com.steventos.rest;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	@Inject
 	protected K dao;
-
+		
 	@GET
 	public List<T> listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
@@ -58,5 +59,16 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 		dao.delete(id);
 		return Response.noContent().build();
 	}
-
+	
+	@GET
+	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
+	public Set<?> getX(@PathParam("id") Long id, @PathParam("campo") String campo) {	
+		try {
+			return dao.getField(id, campo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

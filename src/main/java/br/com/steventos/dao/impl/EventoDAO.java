@@ -8,4 +8,5 @@ public class EventoDAO extends AbstractDAO<Evento>{
 	public EventoDAO() {
 		super(Evento.class);
 	}
+	
 }
