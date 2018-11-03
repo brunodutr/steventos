@@ -2,13 +2,10 @@ package br.com.steventos.rest.impl;
 
 import java.util.Date;
 
-import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
 import org.hibernate.Hibernate;
 
@@ -19,10 +16,7 @@ import br.com.steventos.model.Pessoa;
 import br.com.steventos.model.Transporte;
 import br.com.steventos.rest.AbstractRest;
 
-@RequestScoped
 @Path("/pessoas")
-@Produces("application/json")
-@Consumes("application/json")
 public class PessoaRest extends AbstractRest<Pessoa, PessoaDAO> {
 
 	@GET

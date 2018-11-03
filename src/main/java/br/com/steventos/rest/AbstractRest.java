@@ -1,23 +1,32 @@
 package br.com.steventos.rest;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import br.com.steventos.dao.AbstractDAO;
 
+@RequestScoped
+@Produces(APPLICATION_JSON)
+@Consumes(APPLICATION_JSON)
 public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	@Inject
@@ -62,13 +71,23 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 	
 	@GET
 	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
-	public Set<?> getX(@PathParam("id") Long id, @PathParam("campo") String campo) {	
+	public Set<?> listField(@PathParam("id") Long id, @PathParam("campo") String campo) {	
 		try {
 			return dao.getField(id, campo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new HashSet<>();
+	}
+	
+	@POST
+	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
+	public void insertIntoField(@PathParam("id") Long id, @PathParam("campo") String campo, Map object) {	
+		try {
+			dao.setField(id, campo, object);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

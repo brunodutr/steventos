@@ -2,6 +2,7 @@ package br.com.steventos.dao;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
+
+import br.com.steventos.utils.CastUtils;
+import br.com.steventos.utils.StringUtils;
 
 @Transactional
 public abstract class AbstractDAO<T> {
@@ -61,19 +65,35 @@ public abstract class AbstractDAO<T> {
 
 		T object = em.getReference(entityClass, id);
 
-		String getterMethod = toGetter(campo);
+		String getterMethod = StringUtils.toGetter(campo);
 
-		Method method = entityClass.getDeclaredMethod(getterMethod, null);
+		Method method = entityClass.getDeclaredMethod(getterMethod);
 
-		Hibernate.initialize(method.invoke(object, null));
+		Hibernate.initialize(method.invoke(object));
 
-		return (Set<?>) method.invoke(object, null);
+		return (Set<?>) method.invoke(object);
 
 	};
 
-	private String toGetter(String texto) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void setField(Long id, String campo, Map map) throws Exception {
 
-		return "get" + texto.toUpperCase().charAt(0) + texto.toLowerCase().substring(1);
+		T object = em.getReference(entityClass, id);
 
-	}
+		Object newObject = CastUtils.mapToPojo(map);
+
+		String getterMethod = StringUtils.toGetter(campo);
+
+		Method method = entityClass.getDeclaredMethod(getterMethod);
+
+		Hibernate.initialize(method.invoke(object));
+
+		Set objects = (Set<?>) method.invoke(object);
+
+		objects.add(newObject);
+
+		update(object);
+
+	};
+
 }

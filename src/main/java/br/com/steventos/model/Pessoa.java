@@ -38,19 +38,19 @@ public class Pessoa implements Serializable {
 	private String email;
 
 	@JsonIgnore
-	@ManyToMany(cascade = ALL)
+	@ManyToMany(cascade = ALL, targetEntity = Evento.class)
 	@JoinTable(name = "EVENTO_PESSOA", joinColumns = { @JoinColumn(name = "PESSOA_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "EVENTO_ID") })
 	private Set<Evento> eventos;
 
 	@JsonIgnore
-	@ManyToMany(cascade = ALL)
+	@ManyToMany(cascade = ALL, targetEntity = Transporte.class)
 	@JoinTable(name = "TRANSPORTE_PESSOA", joinColumns = { @JoinColumn(name = "PESSOA_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "TRANSPORTE_ID") })
 	private Set<Transporte> transportes;
 
 	@JsonIgnore
-	@ManyToMany(cascade = ALL)
+	@ManyToMany(cascade = ALL, targetEntity = Hospedagem.class)
 	@JoinTable(name = "HOSPEDAGEM_PESSOA", joinColumns = { @JoinColumn(name = "PESSOA_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "HOSPEDAGEM_ID") })
 	private Set<Hospedagem> hospedagens;

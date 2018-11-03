@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -16,7 +18,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "TRANSPORTE")
-public class Transporte implements Serializable{
+public class Transporte implements Serializable {
 
 	/**
 	 * 
@@ -28,9 +30,11 @@ public class Transporte implements Serializable{
 	private Long id;
 
 	private String nome;
-	
+
 	@JsonIgnore
-	@ManyToMany(mappedBy = "eventos", cascade = ALL, targetEntity = Pessoa.class)
+	@ManyToMany(cascade = ALL, targetEntity = Pessoa.class)
+	@JoinTable(name = "TRANSPORTE_PESSOA", joinColumns = { @JoinColumn(name = "TRANSPORTE_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "PESSOA_ID") })
 	private Set<Pessoa> pessoas;
 
 	public Long getId() {
@@ -56,5 +60,5 @@ public class Transporte implements Serializable{
 	public void setPessoas(Set<Pessoa> pessoas) {
 		this.pessoas = pessoas;
 	}
-	
+
 }

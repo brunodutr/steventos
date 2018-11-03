@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -39,7 +41,9 @@ public class Evento implements Serializable {
 	private String cidade;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "eventos", cascade = ALL, targetEntity = Pessoa.class)
+	@ManyToMany(cascade = ALL, targetEntity = Pessoa.class)
+	@JoinTable(name = "EVENTO_PESSOA", joinColumns = { @JoinColumn(name = "EVENTO_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "PESSOA_ID") })
 	private Set<Pessoa> pessoas;
 
 	public Long getId() {
@@ -49,7 +53,7 @@ public class Evento implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Date getDataIni() {
 		return dataIni;
 	}
