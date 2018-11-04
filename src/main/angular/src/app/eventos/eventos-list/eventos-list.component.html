@@ -7,11 +7,10 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-
-    <mat-form-field class="col-5">
-      <input type="text" matInput placeholder="Cidade">
-      <mat-icon matSuffix>near_me</mat-icon>
-    </mat-form-field>
+    <div class="form-group">
+      <label>Cidade</label>
+      <cidades-autocomplete [searchFunction]="cService.cidadeREST" (selected)="setCidade($event)"></cidades-autocomplete>
+    </div>
 
     <div class="col-1">
       <button mat-flat-button color="primary">Procurar</button>
