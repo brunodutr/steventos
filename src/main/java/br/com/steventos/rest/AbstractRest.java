@@ -23,6 +23,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import br.com.steventos.dao.AbstractDAO;
+import br.com.steventos.dto.AutocompleteDTO;
 
 @RequestScoped
 @Produces(APPLICATION_JSON)
@@ -31,7 +32,7 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	@Inject
 	protected K dao;
-		
+
 	@GET
 	public List<T> listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
@@ -68,10 +69,10 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 		dao.delete(id);
 		return Response.noContent().build();
 	}
-	
+
 	@GET
 	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
-	public Set<?> listField(@PathParam("id") Long id, @PathParam("campo") String campo) {	
+	public Set<?> listField(@PathParam("id") Long id, @PathParam("campo") String campo) {
 		try {
 			return dao.getField(id, campo);
 		} catch (Exception e) {
@@ -79,15 +80,22 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 		}
 		return new HashSet<>();
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@POST
 	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
-	public void insertIntoField(@PathParam("id") Long id, @PathParam("campo") String campo, Map object) {	
+	public void insertIntoField(@PathParam("id") Long id, @PathParam("campo") String campo, Map object) {
 		try {
 			dao.setField(id, campo, object);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@POST
+	@Path("/autocomplete")
+	public List<T> getAutocomplete(AutocompleteDTO dto) {
+		return dao.findAutocomplete(dto);
+	}
+
 }

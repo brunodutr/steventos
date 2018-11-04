@@ -7,20 +7,24 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
 
+import br.com.steventos.dto.AutocompleteDTO;
 import br.com.steventos.utils.CastUtils;
 import br.com.steventos.utils.StringUtils;
 
 @Transactional
 public abstract class AbstractDAO<T> {
 
+	private static final String QUERY_AUTOCOMPLETE = "select * from %s where %s ilike :texto";
+
 	private Class<T> entityClass;
 
 	@PersistenceContext(unitName = "steventos_pu")
-	private EntityManager em;
+	protected EntityManager em;
 
 	public AbstractDAO() {
 
@@ -96,4 +100,13 @@ public abstract class AbstractDAO<T> {
 
 	};
 
+	@SuppressWarnings("unchecked")
+	public List<T> findAutocomplete(AutocompleteDTO dto) {
+		String queryString = String.format(QUERY_AUTOCOMPLETE, entityClass.getSimpleName(), dto.getCampo());
+		Query nativeQuery = em.createNativeQuery(queryString, entityClass);
+
+		nativeQuery.setParameter("texto", "%" + dto.getTexto() + "%");
+		
+		return nativeQuery.getResultList();
+	}
 }

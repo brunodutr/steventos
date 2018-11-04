@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable, of } from "rxjs";
-import { debounceTime, startWith, switchMap } from "rxjs/operators";
-import { CidadeService } from "../../shared/services/cidades.service";
+import { Local } from "src/app/shared/model/local.model";
+import { CidadeService } from "../../shared/service/cidades.service";
 import { Evento } from "../evento.model";
 import { EventoService } from "../eventos.service";
 
@@ -13,6 +12,8 @@ import { EventoService } from "../eventos.service";
 })
 export class EventosFormComponent implements OnInit {
   eventoForm: FormGroup;
+
+  local: Local;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,13 +32,20 @@ export class EventosFormComponent implements OnInit {
   }
 
   onSubmit() {
-    let evento = new Evento(this.eventoForm.value);
+    let ctrl = this.eventoForm.controls;
+
+    let evento = new Evento(
+      ctrl.nome.value,
+      ctrl.descricao.value,
+      ctrl.dataIni.value,
+      ctrl.dataFim.value,
+      this.local
+    );
 
     this.service.create(evento);
   }
 
-  setCidade(event) {
-    console.log(event);
-    this.eventoForm.get("cidade").setValue(event);
+  setCidade(event: Local) {
+    this.local = event;
   }
 }

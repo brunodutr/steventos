@@ -1,5 +1,7 @@
+import { Local } from "../shared/model/local.model";
+
 export class Evento {
-  cidade: string;
+  local: Local;
 
   descricao: string;
 
@@ -11,7 +13,17 @@ export class Evento {
 
   nome: string;
 
-  constructor(object?) {
-    Object.assign(this, object);
+  constructor(
+    nome: string,
+    descricao: string,
+    dataIni: Date,
+    dataFim: Date,
+    local: Local
+  ) {
+    this.nome = nome;
+    this.descricao = descricao;
+    this.dataIni = dataIni;
+    this.dataFim = dataFim;
+    this.local = local;
   }
 }

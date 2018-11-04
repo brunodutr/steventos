@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,10 +16,6 @@ import org.hibernate.jdbc.Work;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-
-import br.com.steventos.model.Evento;
-import br.com.steventos.model.Pessoa;
 
 public class DAOTest {
 

@@ -2,11 +2,9 @@
 
   <input type="text" class="form-control" matInput formControlName="cidade" required [matAutocomplete]="autoGroup">
   <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="emit($event)">
-    <mat-optgroup *ngFor="let estado of cidadesOptions | async" [label]="estado.sigla">
-      <mat-option *ngFor="let cidade of estado.cidades" [value]="cidade">
-        {{ cidade }}
-      </mat-option>
-    </mat-optgroup>
+    <mat-option *ngFor="let local of localObservable | async" [value]="local">
+      {{ local.cidade }} - {{ local.estado }}
+    </mat-option>
   </mat-autocomplete>
 
 </form>
