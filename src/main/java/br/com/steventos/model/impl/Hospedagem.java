@@ -6,6 +6,7 @@ import static javax.persistence.FetchType.EAGER;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,6 +27,7 @@ public class Hospedagem extends BaseModel {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false)
 	private String nome;
 
 	@ManyToOne(fetch = EAGER, cascade = DETACH)

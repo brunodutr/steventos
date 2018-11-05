@@ -3,10 +3,10 @@ package br.com.steventos.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -72,13 +72,16 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	@GET
 	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
-	public Set<?> listField(@PathParam("id") Long id, @PathParam("campo") String campo) {
+	public Collection<?> listField(@PathParam("id") Long id, @PathParam("campo") String campo) {
+
 		try {
 			return dao.getField(id, campo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return new HashSet<>();
+
 	}
 
 	@SuppressWarnings("rawtypes")

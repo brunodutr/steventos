@@ -1,5 +1,6 @@
 package br.com.steventos.rest.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -80,8 +81,9 @@ public class PessoaRest extends AbstractRest<Pessoa, PessoaDAO> {
 	private void adicionaTransporte(Pessoa pessoa) {
 
 		Transporte transporte = new Transporte();
-		transporte.setNome("Magé x Candelária");
-
+		
+		transporte.setValor(BigDecimal.TEN);
+		
 		Local local = new Local();
 		local.setCidade("Rio de Janeiro");
 		local.setEstado("RJ");

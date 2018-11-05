@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2>Cadastrar Evento</h2>
+    <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+
+      <div class=" form-group">
+        <label>Nome</label>
+        <input type="text" formControlName="nome" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" formControlName="descricao" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>Cidade</label>
+        <cidades-autocomplete [searchFunction]="cService.cidadeJSON" [(value)]="local"></cidades-autocomplete>
+      </div>
+
+      <div class="form-group">
+        <label>Data Inicial</label>
+        <mat-datepicker #dInicial></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="dInicial"></mat-datepicker-toggle>
+        <input formControlName="dataIni" matInput [matDatepicker]="dInicial" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Data Final</label>
+        <mat-datepicker #dFinal></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="dFinal"></mat-datepicker-toggle>
+        <input formControlName="dataFim" matInput [matDatepicker]="dFinal" class="form-control">
+      </div>
+
+
+      <div class="form-group">
+        <button class="btn btn-primary">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -7,12 +7,14 @@ import static javax.persistence.FetchType.EAGER;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -27,14 +29,19 @@ public class Evento extends BaseModel {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false)
 	private String nome;
 
+	@Column(nullable = false)
 	private String descricao;
 
+	@Column(nullable = false)
 	private Date dataIni;
 
+	@Column(nullable = false)
 	private Date dataFim;
 
+	@NotNull
 	@ManyToOne(fetch = EAGER, cascade = DETACH)
 	@JoinColumn(name = "local_id")
 	private Local local;

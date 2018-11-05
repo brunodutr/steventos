@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class CastUtils {
 
 	private static final String CLASS_NAME = "className";
-	private static final String MODEL_PACKAGE = "br.com.steventos.model.";
+	private static final String MODEL_PACKAGE = "br.com.steventos.model.impl.";
 
 	public static Object mapToPojo(Map map) throws ClassNotFoundException {
 

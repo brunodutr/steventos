@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Observable, of } from "rxjs";
 import { debounceTime, startWith, switchMap } from "rxjs/operators";
-import { CidadeService } from "../service/cidades.service";
-import { Local } from "../model/local.model";
+import { Local } from "../../models/local.model";
 
 @Component({
   selector: "cidades-autocomplete",
@@ -17,13 +16,13 @@ export class CidadesAutocomplete implements OnInit {
   @Input()
   searchFunction: Function;
 
-  @Output("selected")
-  selected = new EventEmitter<Local>();
+  @Input()
+  value: Local;
 
-  constructor(
-    private cService: CidadeService,
-    private formBuilder: FormBuilder
-  ) {}
+  @Output()
+  valueChange = new EventEmitter<Local>();
+
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.cidadeForm = this.formBuilder.group({
@@ -44,8 +43,10 @@ export class CidadesAutocomplete implements OnInit {
   }
 
   emit(event) {
-    let local: Local = event.option.value;
-    this.selected.emit(local);
-    this.cidadeForm.get("cidade").setValue(local.cidade + " - " + local.estado);
+    this.value = event.option.value;
+    this.valueChange.emit(this.value);
+    this.cidadeForm
+      .get("cidade")
+      .setValue(this.value.cidade + " - " + this.value.estado);
   }
 }

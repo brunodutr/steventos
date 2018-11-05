@@ -4,8 +4,10 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.FetchType.EAGER;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,9 +27,10 @@ public class Transporte extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String nome;
-
+	
+	@Column(nullable = false)
+	private BigDecimal valor;
+	
 	@ManyToOne(fetch = EAGER, cascade = DETACH)
 	@JoinColumn(name = "local_origem_id")
 	private Local origem;
@@ -41,14 +44,6 @@ public class Transporte extends BaseModel {
 	@JoinTable(name = "TRANSPORTE_PESSOA", joinColumns = { @JoinColumn(name = "TRANSPORTE_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "PESSOA_ID") })
 	private Set<Pessoa> pessoas;
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
 	public Set<Pessoa> getPessoas() {
 		return pessoas;
@@ -72,5 +67,13 @@ public class Transporte extends BaseModel {
 
 	public void setDestino(Local destino) {
 		this.destino = destino;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 }

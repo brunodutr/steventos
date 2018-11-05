@@ -4,15 +4,18 @@ import static javax.persistence.CascadeType.ALL;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import br.com.steventos.model.BaseModel;
 
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(name = "LOCAL", uniqueConstraints = { @UniqueConstraint(columnNames = { "cidade", "estado" }) })
 public class Local extends BaseModel {
@@ -22,8 +25,10 @@ public class Local extends BaseModel {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false)
 	private String cidade;
 
+	@Column(nullable = false, length = 2)
 	private String estado;
 
 	@JsonIgnore
@@ -36,11 +41,11 @@ public class Local extends BaseModel {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "origem", cascade = ALL, orphanRemoval = true)
-	private List<Transporte> transportes_origem;
+	private List<Transporte> origem_transportes;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "destino", cascade = ALL, orphanRemoval = true)
-	private List<Transporte> transportes_destino;
+	private List<Transporte> destino_transportes;
 
 	public String getCidade() {
 		return cidade;
@@ -66,6 +71,22 @@ public class Local extends BaseModel {
 		this.eventos = eventos;
 	}
 
+	public List<Transporte> getOrigem_transportes() {
+		return origem_transportes;
+	}
+
+	public void setOrigem_transportes(List<Transporte> origem_transportes) {
+		this.origem_transportes = origem_transportes;
+	}
+
+	public List<Transporte> getDestino_transportes() {
+		return destino_transportes;
+	}
+
+	public void setDestino_transportes(List<Transporte> destino_transportes) {
+		this.destino_transportes = destino_transportes;
+	}
+
 	public List<Hospedagem> getHospedagens() {
 		return hospedagens;
 	}
@@ -74,19 +95,4 @@ public class Local extends BaseModel {
 		this.hospedagens = hospedagens;
 	}
 
-	public List<Transporte> getTransportes_origem() {
-		return transportes_origem;
-	}
-
-	public void setTransportes_origem(List<Transporte> transportes_origem) {
-		this.transportes_origem = transportes_origem;
-	}
-
-	public List<Transporte> getTransportes_destino() {
-		return transportes_destino;
-	}
-
-	public void setTransportes_destino(List<Transporte> transportes_destino) {
-		this.transportes_destino = transportes_destino;
-	}
 }

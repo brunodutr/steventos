@@ -26,11 +26,13 @@ public class Pessoa extends BaseModel {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false)
 	private String nome;
 
+	@Column(nullable = false)
 	private Date dataNascimento;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	@JsonIgnore

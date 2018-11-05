@@ -1,18 +1,18 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   {
     path: "",
-    loadChildren: "./eventos/eventos.module#EventosModule"
+    loadChildren: "./modules/eventos.module#EventosModule"
   },
   {
-    path: "restaurantes",
-    loadChildren: "./restaurantes/restaurantes.module#RestaurantesModule"
+    path: "transportes",
+    loadChildren: "./modules/transportes.module#TransportesModule"
   },
   {
     path: "hospedagens",
-    loadChildren: "./hospedagens/hospedagens.module#HospedagensModule"
+    loadChildren: "./modules/hospedagens.module#HospedagensModule"
   }
 ];
 

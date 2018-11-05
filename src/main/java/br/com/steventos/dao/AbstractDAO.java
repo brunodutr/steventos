@@ -1,6 +1,8 @@
 package br.com.steventos.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +13,7 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 
 import br.com.steventos.dto.AutocompleteDTO;
 import br.com.steventos.utils.CastUtils;
@@ -65,7 +68,7 @@ public abstract class AbstractDAO<T> {
 		return em.createQuery("select t from " + entityClass.getSimpleName() + " t").getResultList();
 	}
 
-	public Set<?> getField(Long id, String campo) throws Exception {
+	public Collection<?> getField(Long id, String campo) throws NoSuchMethodException, SecurityException, HibernateException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
 
 		T object = em.getReference(entityClass, id);
 
@@ -75,7 +78,7 @@ public abstract class AbstractDAO<T> {
 
 		Hibernate.initialize(method.invoke(object));
 
-		return (Set<?>) method.invoke(object);
+		return (Collection<?>) method.invoke(object);
 
 	};
 
@@ -105,7 +108,7 @@ public abstract class AbstractDAO<T> {
 		String queryString = String.format(QUERY_AUTOCOMPLETE, entityClass.getSimpleName(), dto.getCampo());
 		Query nativeQuery = em.createNativeQuery(queryString, entityClass);
 
-		nativeQuery.setParameter("texto", "%" + dto.getTexto() + "%");
+		nativeQuery.setParameter("texto", dto.getTexto() + "%");
 		
 		return nativeQuery.getResultList();
 	}
