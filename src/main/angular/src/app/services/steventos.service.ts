@@ -4,11 +4,6 @@ import { Observable } from "rxjs";
 const REST_URL = "http://localhost:8080/rest";
 
 export class SteventosService<T> {
-  private httpOptions = {
-    headers: new HttpHeaders({
-      "Content-Type": "application/json"
-    })
-  };
   URL_REST: string;
 
   constructor(private http: HttpClient, private path: string) {
@@ -16,48 +11,35 @@ export class SteventosService<T> {
   }
 
   getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.URL_REST, this.httpOptions);
+    return this.http.get<T[]>(this.URL_REST);
   }
 
   getId(id: number): Observable<T> {
-    return this.http.get<T>(`${this.URL_REST}/${id}`, this.httpOptions);
+    return this.http.get<T>(`${this.URL_REST}/${id}`);
   }
 
   create(entity: T): Promise<T> {
-    return this.http
-      .post<T>(this.URL_REST, entity, this.httpOptions)
-      .toPromise();
+    return this.http.post<T>(this.URL_REST, entity).toPromise();
   }
 
   update(id: number, entity: T) {
-    return this.http.put<T>(`${this.URL_REST}/${id}`, entity, this.httpOptions);
+    return this.http.put<T>(`${this.URL_REST}/${id}`, entity);
   }
 
   delete(id: number) {
-    return this.http.delete(`${this.URL_REST}/${id}`, this.httpOptions);
+    return this.http.delete(`${this.URL_REST}/${id}`);
   }
 
   protected getField(id: number, campo: string): Observable<[]> {
-    return this.http.get<[]>(
-      `${this.URL_REST}/${id}/${campo}`,
-      this.httpOptions
-    );
+    return this.http.get<[]>(`${this.URL_REST}/${id}/${campo}`);
   }
 
   protected setField(id: number, campo: string, entity: AddField<T>) {
-    return this.http.post<T[]>(
-      `${this.URL_REST}/${id}/${campo}`,
-      entity,
-      this.httpOptions
-    );
+    return this.http.post<T[]>(`${this.URL_REST}/${id}/${campo}`, entity);
   }
 
   getAutocomplete(filter: AutocompleteFilter) {
-    return this.http.post<T[]>(
-      `${this.URL_REST}/autocomplete`,
-      filter,
-      this.httpOptions
-    );
+    return this.http.post<T[]>(`${this.URL_REST}/autocomplete`, filter);
   }
 }
 

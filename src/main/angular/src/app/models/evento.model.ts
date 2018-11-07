@@ -1,6 +1,8 @@
 import { Local } from "./local.model";
 
 export class Evento {
+  readonly type: string = Evento.name;
+
   private id: number;
 
   private nome: string;
@@ -12,8 +14,6 @@ export class Evento {
   private dataFim: Date;
 
   private dataIni: Date;
-
-  readonly type: string = Evento.name;
 
   constructor(object?: any) {
     Object.assign(this, object);

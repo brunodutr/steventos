@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import org.hibernate.Hibernate;
 
@@ -19,6 +20,7 @@ import br.com.steventos.model.impl.Local;
 import br.com.steventos.model.impl.Pessoa;
 import br.com.steventos.model.impl.Transporte;
 import br.com.steventos.rest.AbstractRest;
+import br.com.steventos.security.Role;
 
 @Path("/pessoas")
 public class PessoaRest extends AbstractRest<Pessoa, PessoaDAO> {
@@ -32,9 +34,10 @@ public class PessoaRest extends AbstractRest<Pessoa, PessoaDAO> {
 	public void addEvento(@PathParam("id") Long id) {
 
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Breno Dutra");
-		pessoa.setEmail("breno_dutra@hotmail.com");
+		pessoa.setNome("Bruno Dutra");
+		pessoa.setEmail("admin@steventos.com");
 		pessoa.setDataNascimento(new Date());
+		pessoa.setPerfil(Role.ADMINISTRADOR);
 
 		adicionaEvento(pessoa);
 		adicionaHospedagem(pessoa);
@@ -99,4 +102,10 @@ public class PessoaRest extends AbstractRest<Pessoa, PessoaDAO> {
 
 		pessoa.getTransportes().add(transporte);
 	}
-}
+	
+	@GET
+	@Path("/email")
+	public Pessoa addEvento(@QueryParam("email") String email) { 
+		return dao.findByEmail(email);
+	}
+} 

@@ -1,6 +1,5 @@
 package br.com.steventos.rest;
 
-import static br.com.steventos.security.Role.ADMINISTRADOR;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -25,7 +24,6 @@ import javax.ws.rs.core.Response;
 import br.com.steventos.dao.AbstractDAO;
 import br.com.steventos.dto.AutocompleteDTO;
 import br.com.steventos.model.BaseModel;
-import br.com.steventos.security.AuthorizationRole;
 
 @RequestScoped
 @Produces(APPLICATION_JSON)
@@ -36,7 +34,6 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 	protected K dao;
 
 	@GET
-	@AuthorizationRole(ADMINISTRADOR)
 	public List<T> listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
 		final List<T> objects = dao.findAll();

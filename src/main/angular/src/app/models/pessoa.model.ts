@@ -8,7 +8,12 @@ export class Pessoa {
 
   private dataNascimento: Date;
 
+  private perfil: number;
+
   constructor(object?: any) {
-    Object.assign(this, object);
+    this.nome = object.nome;
+    this.email = object.email;
+    this.dataNascimento = object.dataNascimento;
+    this.perfil = object.perfil;
   }
 }

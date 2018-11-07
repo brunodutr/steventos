@@ -13,6 +13,7 @@ import { EventoService } from "src/app/services/impl/eventos.service";
 export class EventosListComponent implements OnInit {
   eventos: Observable<Evento[]>;
   local: Local;
+  displayFn: Function;
 
   constructor(
     private service: EventoService,
@@ -20,6 +21,7 @@ export class EventosListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.displayFn = Local.display();
     this.eventos = this.service.getAll();
 
     this.service.getAll().subscribe((res: Evento[]) => {

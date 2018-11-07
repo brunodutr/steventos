@@ -1,0 +1,54 @@
+<steventos-modal target="loginModal">
+
+    <modal-header title="Login"></modal-header>
+
+    <modal-body>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" formControlName="email" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" formControlName="senha" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary">Login</button>
+            </div>
+
+        </form>
+
+    </modal-body>
+
+    <modal-footer>
+
+        <div class="row">
+
+            Esqueceu sua senha?
+            <button type="button" 
+                    class="btn btn-link" 
+                    data-toggle="modal" 
+                    data-target="#resetModal"
+                    data-dismiss="modal">
+                    Clique aqui
+            </button>
+        
+        </div>
+        <div class="row">
+            Não possui uma conta? 
+            <button type="button" 
+                    class="btn btn-link" 
+                    data-toggle="modal" 
+                    data-target="#createModal"
+                    data-dismiss="modal">
+                    Clique aqui
+            </button>
+
+        </div>
+    </modal-footer>
+
+</steventos-modal>

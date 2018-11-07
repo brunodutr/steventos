@@ -13,7 +13,7 @@
 
     <div class="form-group">
       <label>Cidade</label>
-      <cidades-autocomplete [searchFunction]="cService.cidadeREST" [(value)]="local"></cidades-autocomplete>
+      <cidades-autocomplete [searchFunction]="cService.cidadeREST" [display]="displayFn" [(value)]="local"></cidades-autocomplete>
     </div>
 
   </div>

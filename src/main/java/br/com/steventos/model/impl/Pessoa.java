@@ -1,6 +1,7 @@
 package br.com.steventos.model.impl;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.ORDINAL;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import br.com.steventos.model.BaseModel;
+import br.com.steventos.security.Role;
 
 @Entity
 @Table(name = "PESSOA")
@@ -35,6 +38,10 @@ public class Pessoa extends BaseModel {
 	@Column(unique = true, nullable = false)
 	private String email;
 
+	@Enumerated(ORDINAL)
+	@Column(nullable = false)
+	private Role perfil;
+	
 	@JsonIgnore
 	@ManyToMany(cascade = ALL, targetEntity = Evento.class)
 	@JoinTable(name = "EVENTO_PESSOA", joinColumns = { @JoinColumn(name = "PESSOA_ID") }, inverseJoinColumns = {
@@ -108,6 +115,14 @@ public class Pessoa extends BaseModel {
 
 	public void setHospedagens(Set<Hospedagem> hospedagem) {
 		this.hospedagens = hospedagem;
+	}
+
+	public Role getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Role perfil) {
+		this.perfil = perfil;
 	}
 
 }

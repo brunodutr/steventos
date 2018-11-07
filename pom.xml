@@ -95,6 +95,11 @@
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.6.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.5.0</version>
+		</dependency>
 		<!-- testing -->
 		<dependency>
 			<groupId>junit</groupId>
