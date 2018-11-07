@@ -1,22 +1,24 @@
 package br.com.steventos.dao;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
 
 import br.com.steventos.dto.AutocompleteDTO;
-import br.com.steventos.utils.CastUtils;
+import br.com.steventos.model.BaseModel;
+import br.com.steventos.security.AuthorizationRole;
 import br.com.steventos.utils.StringUtils;
 
 @Transactional
@@ -68,26 +70,29 @@ public abstract class AbstractDAO<T> {
 		return em.createQuery("select t from " + entityClass.getSimpleName() + " t").getResultList();
 	}
 
-	public Collection<?> getField(Long id, String campo) throws NoSuchMethodException, SecurityException, HibernateException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+	public Collection<?> getField(Long id, String campo) throws Exception {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 
-		T object = em.getReference(entityClass, id);
-
-		String getterMethod = StringUtils.toGetter(campo);
-
-		Method method = entityClass.getDeclaredMethod(getterMethod);
-
-		Hibernate.initialize(method.invoke(object));
-
-		return (Collection<?>) method.invoke(object);
+		CriteriaQuery<T> query = cb.createQuery(entityClass);
+		
+		Root<T> root = query.from(entityClass);
+		
+		root.join(campo, JoinType.INNER);
+		
+		query.select(root.get(campo));
+		
+		query.where(cb.equal(root.get("id"), id));
+		
+		return (Collection<?>) em.createQuery(query).getResultList();
 
 	};
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void setField(Long id, String campo, Map map) throws Exception {
+	public void setField(Long id, String campo, BaseModel map) throws Exception {
 
 		T object = em.getReference(entityClass, id);
 
-		Object newObject = CastUtils.mapToPojo(map);
+		//Object newObject = CastUtils.mapToPojo(campo, map);
 
 		String getterMethod = StringUtils.toGetter(campo);
 
@@ -97,7 +102,7 @@ public abstract class AbstractDAO<T> {
 
 		Set objects = (Set<?>) method.invoke(object);
 
-		objects.add(newObject);
+		//objects.add(newObject);
 
 		update(object);
 
@@ -109,7 +114,7 @@ public abstract class AbstractDAO<T> {
 		Query nativeQuery = em.createNativeQuery(queryString, entityClass);
 
 		nativeQuery.setParameter("texto", dto.getTexto() + "%");
-		
+
 		return nativeQuery.getResultList();
 	}
 }

@@ -1,12 +1,12 @@
 package br.com.steventos.rest;
 
+import static br.com.steventos.security.Role.ADMINISTRADOR;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,6 +24,8 @@ import javax.ws.rs.core.Response;
 
 import br.com.steventos.dao.AbstractDAO;
 import br.com.steventos.dto.AutocompleteDTO;
+import br.com.steventos.model.BaseModel;
+import br.com.steventos.security.AuthorizationRole;
 
 @RequestScoped
 @Produces(APPLICATION_JSON)
@@ -34,6 +36,7 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 	protected K dao;
 
 	@GET
+	@AuthorizationRole(ADMINISTRADOR)
 	public List<T> listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
 		final List<T> objects = dao.findAll();
@@ -84,10 +87,9 @@ public abstract class AbstractRest<T, K extends AbstractDAO<T>> {
 
 	}
 
-	@SuppressWarnings("rawtypes")
 	@POST
 	@Path("/{id:[0-9][0-9]*}/{campo:[\\S]+(s\\b)}")
-	public void insertIntoField(@PathParam("id") Long id, @PathParam("campo") String campo, Map object) {
+	public void insertIntoField(@PathParam("id") Long id, @PathParam("campo") String campo, BaseModel object) {
 		try {
 			dao.setField(id, campo, object);
 		} catch (Exception e) {

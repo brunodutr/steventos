@@ -13,7 +13,9 @@ export class Evento {
 
   private dataIni: Date;
 
-  constructor(object?: Evento) {
+  readonly type: string = Evento.name;
+
+  constructor(object?: any) {
     Object.assign(this, object);
   }
 }

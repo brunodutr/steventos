@@ -4,6 +4,8 @@ import { Local } from "src/app/models/local.model";
 import { EventoService } from "src/app/services/impl/eventos.service";
 import { CidadeService } from "src/app/services/cidades.service";
 import { Evento } from "src/app/models/evento.model";
+import { Pessoa } from "src/app/models/pessoa.model";
+import { DisplayAutocomplete } from "src/app/interface/display.autocomplete";
 
 @Component({
   selector: "app-eventos-form",
@@ -14,6 +16,7 @@ export class EventosFormComponent implements OnInit {
   eventoForm: FormGroup;
 
   local: Local;
+  displayFn: Function;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,13 +33,14 @@ export class EventosFormComponent implements OnInit {
       cidade: ["", Validators.required]
     });
 
-    this.service.getPessoas(4).subscribe(res => console.log(res));
+    this.displayFn = Local.display();
+    this.service.getPessoas(4).subscribe((res: Pessoa[]) => console.log(res));
   }
 
   onSubmit() {
     let ctrl = this.eventoForm.controls;
 
-    const eventozz: Evento = Object.assign(new Evento(), {
+    const evento: Evento = new Evento({
       nome: ctrl.nome.value,
       descricao: ctrl.descricao.value,
       dataIni: ctrl.dataIni.value,
@@ -44,12 +48,6 @@ export class EventosFormComponent implements OnInit {
       local: this.local
     });
 
-    let evento = new Evento(eventozz);
-
     this.service.create(evento);
-  }
-
-  setCidade(event: Local) {
-    this.local = event;
   }
 }

@@ -14,6 +14,9 @@ export class CidadesAutocomplete implements OnInit {
   localObservable: Observable<Local[]>;
 
   @Input()
+  display: Function;
+
+  @Input()
   searchFunction: Function;
 
   @Input()
@@ -45,8 +48,5 @@ export class CidadesAutocomplete implements OnInit {
   emit(event) {
     this.value = event.option.value;
     this.valueChange.emit(this.value);
-    this.cidadeForm
-      .get("cidade")
-      .setValue(this.value.cidade + " - " + this.value.estado);
   }
 }

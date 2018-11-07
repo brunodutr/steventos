@@ -1,11 +1,22 @@
-export class Local {
-  id: number;
+import { DisplayAutocomplete } from "../interface/display.autocomplete";
 
-  cidade: string;
+export class Local implements DisplayAutocomplete<Local> {
+  readonly type: string = Local.name;
+  private id: number;
 
-  estado: string;
+  private cidade: string;
 
-  constructor(object?: Local) {
+  private estado: string;
+
+  constructor(object?: any) {
     Object.assign(this, object);
+  }
+
+  display(object?: Local): string {
+    return object ? `${object.cidade} - ${object.estado}` : undefined;
+  }
+
+  static display(): Function {
+    return new Local().display.bind(this);
   }
 }

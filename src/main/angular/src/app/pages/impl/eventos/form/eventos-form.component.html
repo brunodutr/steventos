@@ -15,7 +15,7 @@
 
       <div class="form-group">
         <label>Cidade</label>
-        <cidades-autocomplete [searchFunction]="cService.cidadeJSON" [(value)]="local"></cidades-autocomplete>
+        <cidades-autocomplete [display]="displayFn" [searchFunction]="cService.cidadeJSON" [(value)]="local"></cidades-autocomplete>
       </div>
 
       <div class="form-group">

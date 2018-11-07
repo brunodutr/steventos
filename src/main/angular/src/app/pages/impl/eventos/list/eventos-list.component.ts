@@ -19,7 +19,11 @@ export class EventosListComponent implements OnInit {
     private cService: CidadeService
   ) {}
 
-  async ngOnInit() {
-    this.eventos = await this.service.getAll();
+  ngOnInit() {
+    this.eventos = this.service.getAll();
+
+    this.service.getAll().subscribe((res: Evento[]) => {
+      console.log(res);
+    });
   }
 }
