@@ -18,7 +18,6 @@ import org.hibernate.Hibernate;
 
 import br.com.steventos.dto.AutocompleteDTO;
 import br.com.steventos.model.BaseModel;
-import br.com.steventos.security.AuthorizationRole;
 import br.com.steventos.utils.StringUtils;
 
 @Transactional
@@ -87,12 +86,10 @@ public abstract class AbstractDAO<T> {
 
 	};
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void setField(Long id, String campo, BaseModel map) throws Exception {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void setField(Long id, String campo, BaseModel newObject) throws Exception {
 
 		T object = em.getReference(entityClass, id);
-
-		//Object newObject = CastUtils.mapToPojo(campo, map);
 
 		String getterMethod = StringUtils.toGetter(campo);
 
@@ -100,9 +97,9 @@ public abstract class AbstractDAO<T> {
 
 		Hibernate.initialize(method.invoke(object));
 
-		Set objects = (Set<?>) method.invoke(object);
+		Set objects = (Set<BaseModel>) method.invoke(object);
 
-		//objects.add(newObject);
+		objects.add(newObject);
 
 		update(object);
 
