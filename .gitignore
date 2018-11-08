@@ -1,7 +1,5 @@
 /target/
-
-/node_installation/
 .classpath
 .project
 .settings/
-/angular/
+/src/main/resources/steventos-firebase-adminsdk.json
